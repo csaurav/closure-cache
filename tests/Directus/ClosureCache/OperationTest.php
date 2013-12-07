@@ -9,12 +9,12 @@ use Zend\Cache\StorageFactory;
 class OperationTest extends \PHPUnit_Framework_TestCase
 {
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
-	public function testCallableParameterMustBeCallable() {
-		$storage = StorageFactory::factory(array('adapter' => 'memory'));
-		$Operation = new Operation($storage, 'name', 'nonCallableParameter');
-	}
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCallableParameterMustBeCallable() {
+        $storage = StorageFactory::factory(array('adapter' => 'memory'));
+        $Operation = new Operation($storage, 'name', 'nonCallableParameter');
+    }
 
 }

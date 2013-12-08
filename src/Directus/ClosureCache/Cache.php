@@ -52,16 +52,12 @@ class Cache
     }
 
     /**
-     * Expire the cache entry for an operation with the given name, optionally with arguments.
+     * Expire the cache entry within the equivalent cache key, optionally with arguments.
      * @param  string $name
      * @param  null|array $arguments Must be serializable.
      * @return bool
      */
     public function expire($name, $arguments = null) {
-        if(isset($this->operations[$name])) {
-            return $this->operations[$name]->expire($arguments);
-        }
-        // Attempt to expire key from storage, even if the operation name isn't defined.
         $cacheKey = self::makeCacheKey($name, $arguments);
         return $this->storage->removeItem($cacheKey);
     }

@@ -11,6 +11,14 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('Zend\\Cache\\Storage\\StorageInterface', class_implements($storage));
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCallableParameterMustBeCallable() {
+        $Cache = new Cache(array('adapter' => 'memory'));
+        $Cache->cache('name', 'nonCallableParameter');
+    }
+
     public function testOnTheFlyCacheYieldsCallableResults() {
         $Cache = new Cache(array('adapter' => 'memory'));
         $onTheFlyValue = $Cache->cache('slowOperation', function() {

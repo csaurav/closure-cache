@@ -41,15 +41,6 @@ class Operation
 
     /**
      * @param  null|array $arguments Must be serializable.
-     * @return bool
-     */
-    public function expire($arguments = null) {
-        $cacheKey = Cache::makeCacheKey($this->name, $arguments);
-        return $this->storage->removeItem($cacheKey);
-    }
-
-    /**
-     * @param  null|array $arguments Must be serializable.
      * @return mixed
      */
     public function getValue($arguments = null) {

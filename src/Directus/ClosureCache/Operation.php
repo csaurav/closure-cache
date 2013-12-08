@@ -44,7 +44,7 @@ class Operation
      * @return bool
      */
     public function expire($arguments = null) {
-        $cacheKey = $this->makeCacheKey($this->name, $arguments);
+        $cacheKey = Cache::makeCacheKey($this->name, $arguments);
         return $this->storage->removeItem($cacheKey);
     }
 
@@ -53,7 +53,7 @@ class Operation
      * @return mixed
      */
     public function getValue($arguments = null) {
-        $cacheKey = $this->makeCacheKey($this->name, $arguments);
+        $cacheKey = Cache::makeCacheKey($this->name, $arguments);
         if(!$this->storage->hasItem($cacheKey)) {
             $this->warm($arguments);
         }
@@ -71,22 +71,7 @@ class Operation
         } else {
             $value = $callable();
         }
-        $cacheKey = $this->makeCacheKey($this->name, $arguments);
+        $cacheKey = Cache::makeCacheKey($this->name, $arguments);
         $this->storage->addItem($cacheKey, $value);
     }
-
-    /**
-     * @todo  how to warn if any parameters are not serializable
-     * @param  string $name
-     * @param  null|array $arguments Must be serializable.
-     * @return mixed
-     */
-    protected function makeCacheKey($name, $arguments = null) {
-        $keyParts = array($name);
-        if(is_array($arguments)) {
-            $keyParts[] = $arguments;
-        }
-        return serialize($keyParts);
-    }
-
 }

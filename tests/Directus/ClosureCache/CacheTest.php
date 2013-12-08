@@ -98,15 +98,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $runCount);
     }
 
-    /**
-     * @expectedException Directus\ClosureCache\Exception\CacheOperationNameUndefinedException
-     */
-    public function testCantExpiredUndefinedCacheName() {
-        $runCount = 0;
-        $Cache = new Cache(array('adapter' => 'memory'));
-        $Cache->expire('undefinedSlowOperation');
-    }
-
     public function testExpireWithCallableArgumentsOnlyExpiresCacheWithSpecificArguments() {
         $executedWithArgumentsCount = array();
 
@@ -123,7 +114,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $Cache->warm('slowDynamicOperation', array(null) );
         $Cache->warm('slowDynamicOperation', array('a') );
         $Cache->warm('slowDynamicOperation', array(1) );
-        
+
         $result = $Cache->expire('slowDynamicOperation', array('a') );
 
         $this->assertTrue($result);

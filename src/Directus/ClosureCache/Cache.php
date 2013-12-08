@@ -58,10 +58,12 @@ class Cache
      * @return bool
      */
     public function expire($name, $arguments = null) {
-        if(!isset($this->operations[$name])) {
-            throw new CacheOperationNameUndefinedException("Cache operation with name $name is undefined.");
+        if(isset($this->operations[$name])) {
+            return $this->operations[$name]->expire($arguments);
         }
-        return $this->operations[$name]->expire($arguments);
+        // Attempt to expire key from storage, even if the operation name isn't defined.
+        $cacheKey = self::makeCacheKey($name, $arguments);
+        return $this->storage->removeItem($cacheKey);
     }
 
     /**
@@ -103,5 +105,20 @@ class Cache
         }
         return $this->operations[$name]->getValue($arguments);
     }
+
+    /**
+     * @todo  how to warn if any parameters are not serializable
+     * @param  string $name
+     * @param  null|array $arguments Must be serializable.
+     * @return mixed
+     */
+    public static function makeCacheKey($name, $arguments = null) {
+        $keyParts = array($name);
+        if(is_array($arguments)) {
+            $keyParts[] = $arguments;
+        }
+        return serialize($keyParts);
+    }
+
 
 }

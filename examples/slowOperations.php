@@ -1,10 +1,5 @@
 <?php
 
-// var_dump($argv);
-// var_dump(current($argv));
-// var_dump(__FILE__);
-// exit;
-
 if(basename(__FILE__) === current($argv)) {
 	die("This is loaded via the example files. Don't run this file directly.\n");
 }

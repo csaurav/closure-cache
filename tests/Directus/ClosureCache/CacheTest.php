@@ -35,6 +35,21 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($storage->hasItem(Cache::makeCacheKey('slowOperation')));
     }
 
+    public function testFileSystemAndFileStreamAcceptDataFormat() {
+        $Cache = new Cache(array(
+            'adapter' => 'filesystem',
+            'options' => array(
+                'cache_dir' => sys_get_temp_dir(),
+                'dir_level' => 2
+            )
+        ));
+        $value = array('this array will have to be serialized before being written to file stream');
+        $valueFromCache = $Cache->cache('testFilesystem', function() use ($value) {
+            return $value;
+        });
+        $this->assertEquals($value, $valueFromCache);
+    }
+
     /**
      * @expectedException Directus\ClosureCache\Exception\CacheOperationNameAlreadyDefinedException
      */

@@ -6,6 +6,18 @@ Directus `ClosureCache` is a simple way to cache slow runtime operations without
 
 `ClosureCache` is a thin wrapper for the [`Zend\Cache`](http://framework.zend.com/manual/2.0/en/modules/zend.cache.storage.adapter.html) module, which interfaces with numerous cache engines. It was built as a component of Directus6.
 
+## Install
+
+To install via [Composer](http://getcomposer.org), add the following to your `composer.json`:
+
+```json
+{
+    "require": {
+        "drcts/closure-cache": "0.1.*"
+    }
+}
+```
+
 ## Examples
 
 ### Initialize

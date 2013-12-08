@@ -9,7 +9,6 @@ use Zend\Cache\Storage\StorageInterface;
  */
 class Operation
 {
-
     /**
      * @var Zend\Cache\Storage\StorageInterface
      */
@@ -28,7 +27,7 @@ class Operation
     /**
      * @param StorageInterface $storage
      * @param string           $name
-     * @param callable         $callable
+     * @param callable         $callable Callable return value must be serializable.
      */
     public function __construct(StorageInterface $storage, $name, $callable) {
         if(!is_callable($callable)) {

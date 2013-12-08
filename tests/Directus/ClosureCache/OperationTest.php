@@ -8,7 +8,6 @@ use Zend\Cache\StorageFactory;
  */
 class OperationTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @expectedException InvalidArgumentException
      */
@@ -16,5 +15,4 @@ class OperationTest extends \PHPUnit_Framework_TestCase
         $storage = StorageFactory::factory(array('adapter' => 'memory'));
         $Operation = new Operation($storage, 'name', 'nonCallableParameter');
     }
-
 }

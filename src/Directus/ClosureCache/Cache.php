@@ -8,7 +8,6 @@ use Zend\Cache\StorageFactory;
 
 class Cache
 {
-
     /**
      * @var array
      */
@@ -30,7 +29,7 @@ class Cache
     /**
      * Cache the result of the $callable parameter under the provided name.
      * @param  string $name
-     * @param  callable $callable
+     * @param  callable $callable Callable return value must be serializable.
      * @return mixed
      */
     public function cache($name, $callable) {
@@ -41,7 +40,7 @@ class Cache
     /**
      * Define a cache operation. If the callable accepts arguments, they will be passed via the Cache#warm method.
      * @param  string $name
-     * @param  callable $callable
+     * @param  callable $callable Callable return value must be serializable.
      * @return void
      */
     public function define($name, $callable) {
@@ -115,6 +114,4 @@ class Cache
         }
         return md5(serialize($keyParts));
     }
-
-
 }

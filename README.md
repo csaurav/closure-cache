@@ -106,3 +106,7 @@ $Cache->expire('siteMetadata');
 $Cache->expire('userMetadata', array(1));
 $Cache->expire('userMetadata', array(2));
 ```
+
+## A note on serialization
+
+All arguments and closure return values must be serializable via PHP's [`serialize`](http://php.net/manual/en/function.serialize.php) function. Be sure to convert unserializable data to native/serializable PHP data types before passing them to a `ClosureCache` definition, or returning them from a callable passed to `ClosureCache`.

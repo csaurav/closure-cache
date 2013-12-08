@@ -4,7 +4,6 @@ use Directus\ClosureCache\Cache;
 
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testCacheConstructorCreatesCacheStorage() {
         $Cache = new Cache(array('adapter' => 'memory'));
         $storage = $Cache->getStorage();
@@ -168,5 +167,4 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $executedWithArgumentsCount[ serialize( array('a')  ) ] );
         $this->assertEquals(1, $executedWithArgumentsCount[ serialize( array(1)    ) ] );
     }
-
 }

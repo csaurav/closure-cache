@@ -48,7 +48,7 @@ class Operation
         if(!$this->storage->hasItem($cacheKey)) {
             $this->warm($arguments);
         }
-        return $this->storage->getItem($cacheKey);
+        return unserialize($this->storage->getItem($cacheKey));
     }
 
     /**
@@ -63,6 +63,6 @@ class Operation
             $value = $callable();
         }
         $cacheKey = Cache::makeCacheKey($this->name, $arguments);
-        $this->storage->addItem($cacheKey, $value);
+        $this->storage->addItem($cacheKey, serialize($value));
     }
 }

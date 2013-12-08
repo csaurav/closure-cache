@@ -106,14 +106,14 @@ class Cache
      * @todo  how to warn if any parameters are not serializable
      * @param  string $name
      * @param  null|array $arguments Must be serializable.
-     * @return mixed
+     * @return string
      */
     public static function makeCacheKey($name, $arguments = null) {
         $keyParts = array($name);
         if(is_array($arguments)) {
             $keyParts[] = $arguments;
         }
-        return serialize($keyParts);
+        return md5(serialize($keyParts));
     }
 
 

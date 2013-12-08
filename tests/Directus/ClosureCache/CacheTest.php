@@ -16,8 +16,15 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $onTheFlyValue = $Cache->cache('slowOperation', function() {
             return 'la' . 'la' . 'la';
         });
-        $storage = $Cache->getStorage();
         $this->assertEquals('lalala', $onTheFlyValue);
+
+        $onTheFlyValue2 = $Cache->cache('slowOperation', function() {
+            return "This shouldn't run because the key should be already defined.";
+        });
+        $this->assertEquals('lalala', $onTheFlyValue2);
+
+        $storage = $Cache->getStorage();
+        $this->assertTrue($storage->hasItem(Cache::makeCacheKey('slowOperation')));
     }
 
     /**
@@ -96,6 +103,17 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         $Cache->expire('slowOperation');
         $Cache->warm('slowOperation');
         $this->assertEquals(2, $runCount);
+    }
+
+    public function testExpireExpiresCacheFromStorageEvenWithoutOperationDefinition() {
+        $Cache = new Cache(array('adapter' => 'memory'));
+        $Cache->cache('slowOperation', function() {
+            return 'value';
+        });
+        $storage = $Cache->getStorage();
+        $this->assertTrue($storage->hasItem(Cache::makeCacheKey('slowOperation')));
+        $Cache->expire('slowOperation');
+        $this->assertFalse($storage->hasItem(Cache::makeCacheKey('slowOperation')));
     }
 
     public function testExpireWithCallableArgumentsOnlyExpiresCacheWithSpecificArguments() {
